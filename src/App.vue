@@ -4,7 +4,14 @@ import ChartPlayground from './components/ChartPlayground.vue'
 </script>
 
 <template>
-  <header>
+  <v-app>
+    <v-card>
+      <v-card-title>Home</v-card-title>
+      <v-card-text>
+        <p>Home page</p>
+      </v-card-text>
+      <v-btn>hello</v-btn>
+    </v-card>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
@@ -15,9 +22,9 @@ import ChartPlayground from './components/ChartPlayground.vue'
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
-  </header>
 
-  <RouterView />
+    <RouterView />
+  </v-app>
 </template>
 
 <style scoped>
