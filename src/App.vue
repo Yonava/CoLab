@@ -1,65 +1,85 @@
-<template>
-  <div style="height:600px;width: 600px;display: flex;flex-direction:column;">
-    <vue3-chart-js :id="doughnutChart.id" ref="chartRef" :type="doughnutChart.type"
-      :data="doughnutChart.data"></vue3-chart-js>
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import ChartPlayground from './components/ChartPlayground.vue'
+</script>
 
-    <button @click="updateChart">Update Chart</button>
-  </div>
+<template>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <ChartPlayground />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
 </template>
 
-<script>
-import { ref } from 'vue'
-import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
-
-export default {
-  name: 'App',
-  components: {
-    Vue3ChartJs,
-  },
-  setup() {
-    const chartRef = ref(null)
-
-    const doughnutChart = {
-      id: 'doughnut',
-      type: 'doughnut',
-      data: {
-        labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
-        datasets: [
-          {
-            backgroundColor: [
-              '#41B883',
-              '#E46651',
-              '#00D8FF',
-              '#DD1B16'
-            ],
-            data: [40, 20, 80, 10]
-          }
-        ]
-      }
-    }
-
-    const updateChart = () => {
-      doughnutChart.data.labels = ['Cats', 'Dogs', 'Hamsters', 'Dragons']
-      doughnutChart.data.datasets = [
-        {
-          backgroundColor: [
-            '#333333',
-            '#E46651',
-            '#00D8FF',
-            '#DD1B16'
-          ],
-          data: [100, 20, 800, 20]
-        }
-      ]
-
-      chartRef.value.update()
-    }
-
-    return {
-      doughnutChart,
-      updateChart,
-      chartRef
-    }
-  },
+<style scoped>
+header {
+  line-height: 1.5;
+  max-height: 100vh;
 }
-</script>
+
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
+}
+
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
+  }
+
+  .logo {
+    margin: 0 2rem 0 0;
+  }
+
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+    margin-top: 1rem;
+  }
+}
+</style>
