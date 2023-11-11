@@ -1,5 +1,6 @@
 <template>
   <div style="display: flex;flex-direction:column;">
+    {{ title }}
     <vue3-chart-js
       ref="chartRef"
       :type="chart.type"
@@ -21,6 +22,8 @@ const props = defineProps<{
 
 const chartRef = ref<HTMLElement>()
 const renderKey = ref(0)
+
+const title = ref('')
 
 const chart = {
   id: 'chart',
@@ -52,6 +55,22 @@ const trimEmptyStrings = (matrix: (number | string | undefined)[][]): (number | 
 
   // remove empty rows
   matrix = matrix.filter(row => row.some(cell => cell !== ''))
+  
+  for (let i = 0; i < matrix.length; i++) {
+    const row = matrix[i];
+    const nonEmptyCellIndex = row.findIndex(cell => cell !== '');
+
+    if (nonEmptyCellIndex !== -1 && row.every((cell, index) => index === nonEmptyCellIndex || cell === '')) {
+      // Found a row with only one non-empty cell
+
+      // Remove the row
+      matrix.splice(i, 1);
+
+      // Return the value
+      title.value = String(row[nonEmptyCellIndex])
+    }
+  }
+
 
   // remove trailing empty strings
   for (let row = 0; row < matrix.length; row++) {
