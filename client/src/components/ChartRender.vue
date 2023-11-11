@@ -28,9 +28,9 @@ import { ref } from 'vue'
 // @ts-ignore
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 
-const props = defineProps({
-  chartData: []
-})
+const props = defineProps<{
+  chartData: any;
+}>();
 
 const chartRef = ref<HTMLElement>()
 const renderKey = ref(0)

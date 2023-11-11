@@ -1,46 +1,47 @@
 <template>
-  <DetailFrame :item="report">
-    <template #main>
-      <DetailHeader
-        :item="report"
-        placeholder="Course Code"
-      ></DetailHeader>
-
-      <DetailInput
-        :item="report"
-        prop="client"
-        label="Client"
-        icon="account"
-      />
-
-      <InputCoupler>
+  <div>
+    <DetailFrame :item="report">
+      <template #main>
+        <DetailHeader
+          :item="report"
+          placeholder="Course Code"
+        ></DetailHeader>
 
         <DetailInput
           :item="report"
-          prop="date"
-          icon="calendar-month"
-          label="Date"
+          prop="client"
+          label="Client"
+          icon="account"
         />
 
-        <DetailInput
-          :item="report"
-          prop="status"
-          icon="check-circle"
-          label="Status"
-        />
+        <InputCoupler>
 
-      </InputCoupler>
+          <DetailInput
+            :item="report"
+            prop="date"
+            icon="calendar-month"
+            label="Date"
+          />
 
-      <div style="height: 700px; overflow: auto">
-        <div v-for="(mappedData, index) in mappedDataSets" :key="index">
-          <div style="overflow: auto;">
-            <ChartRender :chartData="mappedData" />
-          </div>
+          <DetailInput
+            :item="report"
+            prop="status"
+            icon="check-circle"
+            label="Status"
+          />
+
+        </InputCoupler>
+
+      </template>
+    </DetailFrame>
+    <div style="height: 700px; overflow: auto; padding: 15px">
+      <div v-for="(mappedData, index) in mappedDataSets" :key="index">
+        <div style="overflow: auto;">
+          <ChartRender :chartData="mappedData" />
         </div>
       </div>
-
-    </template>
-  </DetailFrame>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -83,6 +84,18 @@ onMounted(async () => {
 const getDataSets = async () => {
   for (const range of dataSets.value) {
     const { data } = await (await axios.get(`/api/range/${range}`, requestHeaders()));
+    const rowLength = data.map((d: any) => d.length)
+    const maxLength = Math.max(...rowLength)
+    const newData = data.map((d: any) => {
+      if (d.length < maxLength) {
+        const diff = maxLength - d.length
+        const fill = Array(diff).fill('')
+        return [...d, ...fill]
+      } else {
+        return d
+      }
+    })
+    console.log(newData)
     mappedDataSets.value.push(data || [[]])
   }
 }
