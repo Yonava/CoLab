@@ -83,14 +83,16 @@ export const useState = defineStore('state', {
       console.log(report)
       this.reports.unshift(report)
     },
-    deleteReport(id: number) {
+    async deleteReport(id: number) {
       useSocket().emitUserAction({
         action: 'delete',
         payload: {
           sysId: id
         }
       })
+      const report = this.reports.find((report) => report.sysId === id)
       this.reports = this.reports.filter((report) => report.sysId !== id)
+      await axios.delete(`/api/range/Reports/${report.row}`, requestHeaders());
       this.selectedReport = null
     },
     deleteReportCache(id: number) {
