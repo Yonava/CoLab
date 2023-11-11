@@ -36,7 +36,7 @@
           <DetailInput
             :item="item"
             :input="{ type: 'textarea' }"
-            prop="note"
+            prop="desc"
             label="Notes"
           />
         </div>
@@ -71,8 +71,7 @@
 <script setup lang="ts">
 import DetailInput from './DetailInput.vue'
 // import CustomFields from './CustomFields.vue'
-import { ref, watch } from 'vue'
-import { useElementSize } from '@vueuse/core'
+import { ref } from 'vue'
 import { useState } from '../stores/state'
 
 
@@ -80,11 +79,6 @@ const { deleteReport } = useState()
 
 const sm = ref(false)
 const el = ref(null)
-const { width } = useElementSize(el)
-
-watch(width, (newWidth) => {
-  sm.value = newWidth < 700
-}, { immediate: true })
 
 const props = defineProps<{
   item: any,

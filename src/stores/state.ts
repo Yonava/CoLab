@@ -22,6 +22,7 @@ export const useState = defineStore('state', {
   actions: {
     deleteReport(id: number) {
       this.reports = this.reports.filter((report) => report.sysId !== id)
+      this.selectedReport = null
     }
   }
 })

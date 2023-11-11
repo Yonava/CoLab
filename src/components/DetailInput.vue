@@ -16,7 +16,7 @@
 import InputField from './InputField.vue'
 
 const config = {
-  inputVariant: 'filled',
+  inputVariant: 'outlined',
   inputMedium: 'DETAIL'
 } as const
 
