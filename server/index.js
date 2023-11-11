@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const http = require('http')
 const { google } = require('googleapis');
+const nodemailer = require('nodemailer');
 
 require('dotenv').config();
 
@@ -31,8 +32,6 @@ const errors = {
   INVALID_ACCESS_TOKEN: 'INVALID_ACCESS_TOKEN',
   INVALID_OAUTH_CODE: 'INVALID_OAUTH_CODE',
 }
-
-// app.use("/api/open", openAccessAPI);
 
 function getAuthUrl() {
   const auth = new OAuth2(
@@ -283,6 +282,88 @@ app.put("/api/batch", async (req, res) => {
     res.status(401).json({ error: 'Forbidden' });
     return;
   }
+});
+
+
+app.post('/api/send-mail', async (req, res) => {
+
+  const credentials = {
+    clientId: process.env.GOOGLE_OAUTH_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
+    refreshToken: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
+  }
+
+  const {
+    to,
+    subject,
+    html,
+    attachments = [],
+  } = req.body;
+
+  const auth = new OAuth2(credentials.clientId, credentials.clientSecret, redirectUri);
+  auth.setCredentials({
+    refresh_token: credentials.refreshToken,
+  });
+
+  let accessToken;
+  try {
+    accessToken = await auth.getAccessToken();
+  } catch (err) {
+    console.log(err);
+    res.json({
+      message: 'error',
+      error: err,
+    })
+    return;
+  }
+
+  const user = 'info@aimasterclass.com'
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: 'OAuth2',
+      user,
+      clientId: credentials.clientId,
+      clientSecret: credentials.clientSecret,
+      refreshToken: credentials.refreshToken,
+      accessToken,
+    },
+  });
+
+  const mailOptions = {
+    from: `AI Masterclass <${user}>`,
+    to,
+    subject,
+    html,
+    attachments,
+  };
+
+  // last check to ensure that the email is valid
+  const emailRegex = /\S+@\S+\.\S+/;
+  if (!emailRegex.test(to)) {
+    res.json({
+      message: 'error',
+      error: 'Invalid email address',
+    })
+    return;
+  }
+
+  transporter.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      res.json({
+        message: 'error',
+        err,
+      })
+      return
+    } else {
+      console.log('Email sent!');
+    }
+  });
+
+  res.json({
+    message: 'success',
+  })
 });
 
 if (process.env.NODE_ENV === 'production') {
