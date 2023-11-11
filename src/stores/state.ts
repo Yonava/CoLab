@@ -13,6 +13,8 @@ export const useState = defineStore('state', {
       }))
     ],
     selectedReport: null,
+
+    syncStatus: true,
   }),
   getters: {
 
