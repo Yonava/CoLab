@@ -3,7 +3,7 @@ const { OAuth2 } = google.auth;
 const { GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_CLIENT_SECRET } = process.env;
 const { redirectUri } = require("./index.js");
 
-const spreadsheetId = '1bW-aQRn-GAbTsNkV2VB9xtBFT3n-LPrSJXua_NA2G6Y'
+const spreadsheetId = '1pj3yveeKzqVRaIfLOyYB-t9ntEgkCFikkKE3Iu1NvA0'
 
 module.exports = class GoogleSheet {
   spreadsheetId;

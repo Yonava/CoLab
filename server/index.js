@@ -145,6 +145,7 @@ app.get("/api/range/:range", async (req, res) => {
     const data = await sheet.getRange(range);
     res.json(data);
   } catch (e) {
+    console.log(e)
     res.status(401).json({ error: 'Forbidden' });
     return;
   }
@@ -228,6 +229,7 @@ app.delete("/api/range/:range/:row", async (req, res) => {
 });
 
 app.delete("/api/range/:range", async (req, res) => {
+  console.log('hitting 5.5')
   const { range } = req.params;
   const { authorization } = req.headers;
   const accessToken = authorization.split(' ')[1];

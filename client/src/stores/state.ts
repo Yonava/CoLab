@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia'
 import { useSocket } from './socket'
+import axios from 'axios'
+import { mapReports, unmapReports } from '../Mapper'
+
+let headerRow = []
 
 type Report = {
   name: string
@@ -8,6 +12,14 @@ type Report = {
   status: string
   desc: string
   sysId: number
+}
+
+function requestHeaders() {
+  return {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access-token')}`,
+    } as const
+  }
 }
 
 export const useState = defineStore('state', {
@@ -51,16 +63,25 @@ export const useState = defineStore('state', {
     },
     async getReports() {
 
-      this.reports = [
-        ...Array.from({ length: 100 }, (_, i) => ({
-          name: `Report ${i + 2}`,
-          client: `Client ${i + 2}`,
-          date: '2021-09-01',
-          status: 'In Progress',
-          desc: 'Lorem ipsum dolor sit amet, consectetur',
-          sysId: i + 2,
-        }))
-      ]
+      try {
+        const { data } = (await axios.get(`/api/range/Reports`, requestHeaders()));
+        headerRow = data.shift()
+        this.reports = mapReports(data)
+      } catch (error) {
+        console.error(error);
+        return [];
+      }
+
+      // this.reports = [
+      //   ...Array.from({ length: 100 }, (_, i) => ({
+      //     name: `Report ${i + 2}`,
+      //     client: `Client ${i + 2}`,
+      //     date: '2021-09-01',
+      //     status: 'In Progress',
+      //     desc: 'Lorem ipsum dolor sit amet, consectetur',
+      //     sysId: i + 2,
+      //   }))
+      // ]
 
     },
     addReportCache(report: any) {
