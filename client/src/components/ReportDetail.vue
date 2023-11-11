@@ -31,14 +31,11 @@
 
       </InputCoupler>
 
-      {{ dataSets }}
-
-      <div v-for="(mappedData, index) in mappedDataSets" :key="index">
-        <h1>
-          Data Set: {{ index + 1 }} is
-        </h1>
-        <div>
-          {{ mappedData  }}
+      <div style="height: 700px; overflow: auto">
+        <div v-for="(mappedData, index) in mappedDataSets" :key="index">
+          <div style="overflow: auto;">
+            <ChartRender :chartData="mappedData" />
+          </div>
         </div>
       </div>
 
@@ -51,7 +48,8 @@ import InputCoupler from './InputCoupler.vue'
 import DetailInput from './DetailInput.vue'
 import DetailHeader from './DetailHeader.vue'
 import DetailFrame from './DetailFrame.vue'
-import { computed, onMounted, ref, watch} from 'vue'
+import ChartRender from './ChartRender.vue'
+import { computed, onMounted, ref } from 'vue'
 import axios from 'axios'
 
 function requestHeaders() {
