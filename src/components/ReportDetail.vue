@@ -24,9 +24,9 @@
 
         <DetailInput
           :item="report"
-          prop="docuSignCompleted"
-          icon="calendar-check"
-          label="DocuSign Completed"
+          prop="status"
+          icon="check-circle"
+          label="Status"
         />
 
       </InputCoupler>
