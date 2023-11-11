@@ -32,6 +32,7 @@ const props = defineProps<{
   chartData: any;
 }>();
 
+
 const chartRef = ref<HTMLElement>()
 const renderKey = ref(0)
 

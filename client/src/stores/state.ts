@@ -54,16 +54,15 @@ export const useState = defineStore('state', {
         sysId,
       }
 
+      const { data: res } = await axios.post(`/api/range/Reports`, unmapReports([report]), requestHeaders());
+      report.row = res.row;
+
       useSocket().emitUserAction({
         action: 'add',
         payload: {
           item: report
         }
       })
-
-      const { data: res } = await axios.post(`/api/range/Reports`, unmapReports([report]), requestHeaders());
-      console.log(res)
-      report.row = res;
 
       this.reports.unshift(report)
       this.selectedReport = report
@@ -80,7 +79,6 @@ export const useState = defineStore('state', {
       }
     },
     addReportCache(report: any) {
-      console.log(report)
       this.reports.unshift(report)
     },
     async deleteReport(id: number) {
