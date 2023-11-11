@@ -8,11 +8,11 @@ export const useState = defineStore('state', {
         client: `Client ${i + 2}`,
         date: '2021-09-01',
         status: 'In Progress',
-        desc: 'Lorem ipsum dolor sit amet, consectetur'
+        desc: 'Lorem ipsum dolor sit amet, consectetur',
+        sysId: i + 2,
       }))
     ],
-    selectedReports: [],
-    draggedReport: null,
+    selectedReport: null,
   }),
   getters: {
 

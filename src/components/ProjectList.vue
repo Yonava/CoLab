@@ -30,11 +30,16 @@
         v-for="report in reports"
         :key="report.name"
         style="display: flex; flex-direction: column; align-items: center;"
-        :draggable="true"
-        @dragstart="draggedReport.value = report"
-        @dragend="draggedReport.value = null"
+
       >
-        <div style="display: flex; flex-direction: row; width: 100%; padding: 15px;" class="list-item">
+        <div
+          @click="selectedReport = report"
+          style="`display: flex; flex-direction: row; width: 100%; padding: 15px;`"
+          :class="[
+            selectedReport === report ? 'selected-item' : '',
+            'list-item'
+          ]"
+        >
           <ListItem :report="report" />
         </div>
         <div style="width: 95%; height: 1px; background: rgba(255,255,255,0.3);"></div>
@@ -50,11 +55,13 @@ import { useState } from '../stores/state'
 import { storeToRefs } from 'pinia'
 import ListItem from '../components/ListItem.vue'
 
-const { reports, draggedReport } = storeToRefs(useState())
-
+const { reports, selectedReport } = storeToRefs(useState())
 </script>
 
 <style scoped>
+.selected-item {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 
 .list-item {
   transition: background-color 0.2s ease-in-out;
