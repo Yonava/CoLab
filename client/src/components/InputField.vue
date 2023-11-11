@@ -95,12 +95,9 @@
 <script setup lang="ts">
 import ButtonInput from './ButtonInput.vue'
 import { computed } from 'vue'
-// import { useBroadcastThroughSocket } from '../../../TrackItemForUpdate'
-// import { useSheetManager } from '../../../store/useSheetManager';
-// import { storeToRefs } from 'pinia';
-// import { useUpdateManager } from '../../../store/useUpdateManager';
+import { useSocket } from '../stores/socket';
 
-// const { readOnlyMode } = storeToRefs(useSheetManager())
+const { emitUserAction } = useSocket()
 
 type VuetifyInputVariant =
   'outlined' |
@@ -147,12 +144,17 @@ const props = defineProps<{
   },
 }>()
 
-// const { broadcast } = useBroadcastThroughSocket(props.inputMedium)
-
 // const { trackItemForUpdate } = useUpdateManager()
 
 const input = () => {
-  // broadcast(props.prop)
+  emitUserAction({
+    action: 'prop-update',
+    payload: {
+      prop: props.prop,
+      value: props.item[props.prop],
+      sysId: props.item.sysId
+    }
+  })
 }
 
 const buttonClicked = () => {
@@ -167,7 +169,14 @@ const buttonClicked = () => {
 
   // @ts-ignore
   props.item[props.prop] = props.button?.newPropValue()
-  // broadcast(props.prop)
+  emitUserAction({
+    action: 'prop-update',
+    payload: {
+      prop: props.prop,
+      value: props.item[props.prop],
+      sysId: props.item.sysId
+    }
+  })
 }
 
 const activeInput = computed(() => {
