@@ -1,5 +1,8 @@
 <template>
   <div style="display: flex;flex-direction:column;">
+    <h1>
+      {{ title }}
+    </h1>
     <vue3-chart-js
       ref="chartRef"
       :type="chart.type"
@@ -22,6 +25,8 @@ const props = defineProps<{
 
 const chartRef = ref<HTMLElement>()
 const renderKey = ref(0)
+
+const title = ref('')
 
 const chart = {
   id: 'chart',
@@ -50,6 +55,21 @@ const updateChart = (newChart: object) => {
 
 const trimEmptyStrings = (matrix: (number | string | undefined)[][]): (number | string | undefined)[][] => {
   let numCols = matrix[0].length
+
+  for (let i = 0; i < matrix.length; i++) {
+    const row = matrix[i];
+    const nonEmptyCellIndex = row.findIndex(cell => cell !== '');
+
+    if (nonEmptyCellIndex !== -1 && row.every((cell, index) => index === nonEmptyCellIndex || cell === '')) {
+      // Found a row with only one non-empty cell
+
+      // Remove the row
+      matrix.splice(i, 1);
+
+      // Return the value
+      title.value = String(row[nonEmptyCellIndex])
+    }
+  }
 
   // remove empty rows
   matrix = matrix.filter(row => row.some(cell => cell !== ''))
@@ -96,17 +116,6 @@ const trimEmptyStrings = (matrix: (number | string | undefined)[][]): (number | 
 
   return matrix;
 }
-
-const originalMatrix: (number | string)[][] = [
-  ['','', '', '', '', '', '', '', '', ''],
-  ['','', '', 'dsadsa', 'dsadsa', 'dasdsaads', '', 6, '', ''],
-  ['ss','','$1', '', 3, 4, '', 6, '', ''],
-  ['','','', 8, '', 10, 11, '', 13, ''],
-  ['','',14, '', 16, '', 18, 19, '', ''],
-  ['','','', 22, 23, 24, '', 26, 27, ''],
-  ['','',28, '', 30, 31, 32, '', 34, ''],
-];
-
 
 // run before trimEmptyStrings() otherwise type error due to undefined in the array
 // DOES NOT INTERPOLATE MORE THAN ONE DATA POINT
