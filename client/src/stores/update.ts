@@ -50,7 +50,7 @@ const cells: Record<number, string> = {
   25: 'Z',
 } as const
 
-export const useUpdateManager = defineStore('updateManager', {
+export const useUpdateScheduler = defineStore('updateScheduler', {
   state: () => ({
     // a list of items that need to be updated
     updater: {} as UpdateItem,

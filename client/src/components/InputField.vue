@@ -96,8 +96,10 @@
 import ButtonInput from './ButtonInput.vue'
 import { computed } from 'vue'
 import { useSocket } from '../stores/socket';
+import { useUpdateScheduler } from '../stores/update'
 
 const { emitUserAction } = useSocket()
+const { trackItemForUpdate } = useUpdateScheduler()
 
 type VuetifyInputVariant =
   'outlined' |
@@ -144,8 +146,6 @@ const props = defineProps<{
   },
 }>()
 
-// const { trackItemForUpdate } = useUpdateManager()
-
 const input = () => {
   emitUserAction({
     action: 'prop-update',
@@ -162,10 +162,9 @@ const buttonClicked = () => {
     return
   }
 
-  // trackItemForUpdate({
-  //   item: props.item,
-  //   panelName: props.inputMedium === 'DETAIL' ? useSheetManager().getActivePanel.panelName : useSheetManager().getActiveEmbeddedPanel.panelName
-  // })
+  trackItemForUpdate({
+    item: props.item,
+  })
 
   // @ts-ignore
   props.item[props.prop] = props.button?.newPropValue()
@@ -206,10 +205,9 @@ const content = computed({
       return
     }
 
-    // trackItemForUpdate({
-    //   item: props.item,
-    //   panelName: props.inputMedium === 'DETAIL' ? useSheetManager().getActivePanel.panelName : useSheetManager().getActiveEmbeddedPanel.panelName
-    // })
+    trackItemForUpdate({
+      item: props.item,
+    })
 
     // @ts-ignore
     props.item[props.prop] = v
