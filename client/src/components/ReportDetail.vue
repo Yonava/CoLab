@@ -51,7 +51,7 @@ import InputCoupler from './InputCoupler.vue'
 import DetailInput from './DetailInput.vue'
 import DetailHeader from './DetailHeader.vue'
 import DetailFrame from './DetailFrame.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch} from 'vue'
 import axios from 'axios'
 
 function requestHeaders() {

@@ -2,6 +2,7 @@
   <ReportDetail
     v-if="selectedReport"
     :item="selectedReport"
+    :key="selectedReport.sysId"
   />
    <div
       v-else
