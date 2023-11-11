@@ -22,6 +22,9 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from) => {
+  if (to.name === 'auth') {
+    return
+  }
   const { getReports } = useState()
   const { connect } = useSocket()
   await getReports()

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { useSocket } from './socket'
 import axios from 'axios'
 import { mapReports, unmapReports } from '../Mapper'
+import { useRouter } from 'vue-router'
 
 let headerRow = []
 
@@ -12,6 +13,7 @@ type Report = {
   status: string
   desc: string
   sysId: number
+  row: any
 }
 
 function requestHeaders() {
@@ -39,7 +41,7 @@ export const useState = defineStore('state', {
     }
   },
   actions: {
-    addReport() {
+    async addReport() {
       const sysId = Math.floor(Math.random() * 100000)
 
       const report: Report = {
@@ -48,6 +50,7 @@ export const useState = defineStore('state', {
         date: '2021-09-01',
         status: 'In Progress',
         desc: 'Lorem ipsum dolor sit amet, consectetur',
+        row: null,
         sysId,
       }
 
@@ -57,6 +60,10 @@ export const useState = defineStore('state', {
           item: report
         }
       })
+
+      const { data: res } = await axios.post(`/api/range/Reports`, unmapReports([report]), requestHeaders());
+      console.log(res)
+      report.row = res;
 
       this.reports.unshift(report)
       this.selectedReport = report
@@ -68,21 +75,9 @@ export const useState = defineStore('state', {
         headerRow = data.shift()
         this.reports = mapReports(data)
       } catch (error) {
-        console.error(error);
-        return [];
+        console.log(error)
+        window.location.replace(`/auth`)
       }
-
-      // this.reports = [
-      //   ...Array.from({ length: 100 }, (_, i) => ({
-      //     name: `Report ${i + 2}`,
-      //     client: `Client ${i + 2}`,
-      //     date: '2021-09-01',
-      //     status: 'In Progress',
-      //     desc: 'Lorem ipsum dolor sit amet, consectetur',
-      //     sysId: i + 2,
-      //   }))
-      // ]
-
     },
     addReportCache(report: any) {
       console.log(report)
