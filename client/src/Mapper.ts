@@ -7,6 +7,7 @@ const REPORTS = [
   'date',
   'status',
   'desc',
+  'dataSets'
 ] as const;
 
 export const map = <T>(spreadsheetMatrix: string[][], headerRow: readonly (keyof T)[]) => {

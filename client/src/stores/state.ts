@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { useSocket } from './socket'
 import axios from 'axios'
 import { mapReports, unmapReports } from '../Mapper'
-import { useRouter } from 'vue-router'
 
 let headerRow = []
 
@@ -12,6 +11,7 @@ type Report = {
   date: string
   status: string
   desc: string
+  dataSets: string
   sysId: number
   row: any
 }
