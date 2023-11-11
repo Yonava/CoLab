@@ -95,8 +95,7 @@ const getDataSets = async () => {
         return d
       }
     })
-    console.log(newData)
-    mappedDataSets.value.push(data || [[]])
+    mappedDataSets.value.push(newData || [[]])
   }
 }
 </script>

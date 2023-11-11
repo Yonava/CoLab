@@ -7,19 +7,6 @@
       :data="chart.data"
       :key="renderKey"
     ></vue3-chart-js>
-
-    <button @click="updateChart(pushChart([
-      [1, 11],
-      [2, 12],
-      [3, 13],
-      [4, 14],
-      [5, 15],
-      [6, 16],
-      [7, 17],
-      [8, 18],
-      [9, 19],
-      [10, 20],
-    ], 'scatter'))">Update Chart</button>
   </div>
 </template>
 
@@ -47,7 +34,7 @@ const chart = {
       borderColor: 'rgb(0, 0, 0)',
       tension: 0.1
     }]
-}
+  },
 }
 
 const updateChart = (newChart: object) => {
@@ -260,13 +247,13 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
           }],
         },
       };
+      console.log('data')
 
       for (let i = 1; i < matrix.length; i++) {
         tempChart.data.datasets[0].data.push({
           'x': matrix[i][0],
           'y': matrix[i][1]
         })
-        console.log(tempChart.data.datasets[0].data)
       } break
     default:
       throw new Error("Unknown Chart Type passed to function pushChart()")
@@ -330,25 +317,26 @@ const isScatterChartData = (arr: any): arr is [any, any][] => {
   return (
     Array.isArray(arr) &&
     arr.length >= 2 &&
-    arr.every(
-      (point) =>
-        Array.isArray(point) &&
-        point.length === 2
-    )
+    arr.every((row) => Array.isArray(row) && row.length === 2)
   )
 }
 
 const inferChartType = (data: any): string[] => {
   let availableChartTypes = []
+  if (isScatterChartData(data)) availableChartTypes.push('scatter');
   if (isBarChartData(data)) availableChartTypes.push('bar')
   if (isLineChartData(data)) availableChartTypes.push('line')
-  if (isScatterChartData(data)) availableChartTypes.push('scatter');
   if (availableChartTypes.length === 0) throw new Error('Unknown Chart Type')
   return availableChartTypes
 }
 
 const cleanedData = trimEmptyStrings(interpolateMissingValues(cleanAndConvert(props.chartData)))
+console.log(cleanedData)
 const chartTypes = inferChartType(cleanedData)
-pushChart(cleanedData, chartTypes[0] ?? 'bar')
+console.log(chartTypes)
+
+setTimeout(() => {
+  updateChart(pushChart(cleanedData, chartTypes[0] ?? 'bar'))
+}, 200)
 
 </script>
