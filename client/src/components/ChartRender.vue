@@ -344,6 +344,7 @@ const cleanedData = trimEmptyStrings(interpolateMissingValues(cleanAndConvert(pr
 const chartTypes = inferChartType(cleanedData)
 
 setTimeout(() => {
+  // delay loading
   updateChart(pushChart(cleanedData, chartTypes[0] ?? 'bar'))
 }, 200)
 
