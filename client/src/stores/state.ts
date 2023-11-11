@@ -26,6 +26,8 @@ export const useState = defineStore('state', {
     filter: '',
 
     syncStatus: true,
+
+    user: null
   }),
   getters: {
     filteredReports(): any {
@@ -47,9 +49,15 @@ export const useState = defineStore('state', {
 
       this.reports.unshift(report)
     },
+    addReportCache(report: Report) {
+      this.reports.unshift(report)
+    },
     deleteReport(id: number) {
       this.reports = this.reports.filter((report) => report.sysId !== id)
       this.selectedReport = null
+    },
+    deleteReportCache(id: number) {
+      this.reports = this.reports.filter((report) => report.sysId !== id)
     }
   }
 })
