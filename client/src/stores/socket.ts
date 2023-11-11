@@ -21,13 +21,7 @@ export const useSocket = defineStore("socket", {
       }
 
       this.disconnect();
-
-      const { user } = useState();
       const router = useRouter();
-
-      if (!user) {
-        throw new Error('No google profile found')
-      }
 
       const socketUrl = window.location.hostname === 'localhost' ? 'http://localhost:3001' : '/'
       this.socket = io(socketUrl);
@@ -52,6 +46,7 @@ export const useSocket = defineStore("socket", {
       }
     },
     emitUserAction(action: any) {
+      console.log(this.socket)
       this.socket.emit('userAction', {
         ...action,
         googleId: useState().user?.id

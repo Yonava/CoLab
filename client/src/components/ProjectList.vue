@@ -45,6 +45,7 @@
     <!-- list box -->
     <div style="display: flex; justify-content: center; align-items: center;">
     <div
+      v-if="filteredReports.length !== 0"
       style="width: 95%; height: 90vh; background-color: rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: auto"
     >
       <!-- item box -->

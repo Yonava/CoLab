@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useSocket } from './socket'
 
 type Report = {
   name: string
@@ -11,16 +12,7 @@ type Report = {
 
 export const useState = defineStore('state', {
   state: () => ({
-    reports: [
-      ...Array.from({ length: 100 }, (_, i) => ({
-        name: `Report ${i + 2}`,
-        client: `Client ${i + 2}`,
-        date: '2021-09-01',
-        status: 'In Progress',
-        desc: 'Lorem ipsum dolor sit amet, consectetur',
-        sysId: i + 2,
-      }))
-    ],
+    reports: [],
     selectedReport: null,
 
     filter: '',
@@ -31,7 +23,7 @@ export const useState = defineStore('state', {
   }),
   getters: {
     filteredReports(): any {
-      return this.reports.filter((report) => report.name.toLowerCase().includes(this.filter.toLowerCase()))
+      return this.reports.filter((report) => report.name.toLowerCase().includes(this.filter.toLowerCase())) || []
     }
   },
   actions: {
@@ -47,12 +39,41 @@ export const useState = defineStore('state', {
         sysId,
       }
 
+      useSocket().emitUserAction({
+        action: 'add',
+        payload: {
+          item: report
+        }
+      })
+
       this.reports.unshift(report)
+      this.selectedReport = report
     },
-    addReportCache(report: Report) {
+    async getReports() {
+
+      this.reports = [
+        ...Array.from({ length: 100 }, (_, i) => ({
+          name: `Report ${i + 2}`,
+          client: `Client ${i + 2}`,
+          date: '2021-09-01',
+          status: 'In Progress',
+          desc: 'Lorem ipsum dolor sit amet, consectetur',
+          sysId: i + 2,
+        }))
+      ]
+
+    },
+    addReportCache(report: any) {
+      console.log(report)
       this.reports.unshift(report)
     },
     deleteReport(id: number) {
+      useSocket().emitUserAction({
+        action: 'delete',
+        payload: {
+          sysId: id
+        }
+      })
       this.reports = this.reports.filter((report) => report.sysId !== id)
       this.selectedReport = null
     },
