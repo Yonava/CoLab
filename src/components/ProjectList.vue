@@ -22,10 +22,22 @@
 
     <!-- list box -->
     <div style="display: flex; justify-content: center; align-items: center;">
-    <div style="width: 95%; height: 90vh; padding: 15px; background-color: rgba(255, 255, 255, 0.2); border-radius: 10px; overflow: auto">
+    <div
+      style="width: 95%; height: 90vh; background-color: rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: auto"
+    >
       <!-- item box -->
-      <div v-for="report in reports" :key="report.name">
-        {{ reports  }}
+      <div
+        v-for="report in reports"
+        :key="report.name"
+        style="display: flex; flex-direction: column; align-items: center;"
+        :draggable="true"
+        @dragstart="draggedReport.value = report"
+        @dragend="draggedReport.value = null"
+      >
+        <div style="display: flex; flex-direction: row; width: 100%; padding: 15px;" class="list-item">
+          <ListItem :report="report" />
+        </div>
+        <div style="width: 95%; height: 1px; background: rgba(255,255,255,0.3);"></div>
       </div>
     </div>
     </div>
@@ -34,25 +46,23 @@
 </template>
 
 <script setup lang="ts">
-// import { setSelectedItem } from './SetSelectedItem'
-// import { useSheetManager } from '../../store/useSheetManager'
-// import { storeToRefs } from 'pinia'
+import { useState } from '../stores/state'
+import { storeToRefs } from 'pinia'
+import ListItem from '../components/ListItem.vue'
 
-const reports = [
-  {
-    name: 'Report 1',
-    client: 'Client 1',
-    date: '2021-09-01',
-    status: 'In Progress',
-    desc: 'Lorem ipsum dolor sit amet, consectetur'
-  },
-  // generate 5 more reports
-  ...Array.from({ length: 5 }, (_, i) => ({
-    name: `Report ${i + 2}`,
-    client: `Client ${i + 2}`,
-    date: '2021-09-01',
-    status: 'In Progress',
-    desc: 'Lorem ipsum dolor sit amet, consectetur'
-  }))
-]
+const { reports, draggedReport } = storeToRefs(useState())
+
 </script>
+
+<style scoped>
+
+.list-item {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.list-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+</style>
