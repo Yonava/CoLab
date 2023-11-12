@@ -61,10 +61,10 @@
     </DetailFrame>
     <div
       v-if="mappedDataSets.length > 0 && dataSets.length !== 0"
-      style="padding: 15px"
+      style="padding: 15px;"
     >
       <div v-for="(mappedData, index) in mappedDataSets" :key="index">
-        <div style="overflow: auto;">
+        <div class="mb-10">
           <ChartRender :chartData="mappedData" />
         </div>
       </div>
@@ -73,7 +73,6 @@
       v-else-if="mappedDataSets.length === 0 && dataSets.length !== 0"
       style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding-top: 50px;"
     >
-      <!-- <img src="../assets/GraphLoading.gif" > -->
       <v-progress-circular
         indeterminate
         color="blue-darken-2"

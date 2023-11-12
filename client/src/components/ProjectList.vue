@@ -7,7 +7,7 @@
   >    <!-- top area -->
     <div
       class="pa-2"
-      style="display: flex; flex-direction: row; align-items: center; gap: 10px;  position: sticky; top: 0; z-index: 1000; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
+      style="display: flex; flex-direction: row; align-items: center; gap: 10px; background: rgb(43, 111, 189);  position: sticky; top: 0; z-index: 1000; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
     >
       <h1
         style="font-size: 2.2em; background: rgb(0, 0, 0, 0.2)"
