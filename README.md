@@ -2,10 +2,12 @@
 
 ## We Are A Data Parsing and Aggregation Platform:
 - Import and export data without barriers:
-  All read and writes operate on a spreadsheet you control using the Google Sheets API 
-- No waiting for the database guy:
-  Database Management Systems are great for technical experts, but can unfortunately slow down teams by blocking access to their data layer. For teams that desire fast iteration, there is CoLab. Our software is the bridge between stable software and tangible data. By harnessing the power of Google Cloud Platform, no team will have to wait for a database guy.
-- Keep everyone in the loop:
+  All read and writes operate on a spreadsheet you control using the Google Sheets API
+  
+- No More Waiting For The Database Guy:
+  Database Management Systems offer significant benefits for technical experts, yet they can inadvertently impede team efficiency by creating barriers to accessing the data layer. At CoLab, we believe in a solution designed for teams seeking rapid iteration. We serve as the seamless link between robust software and tangible data. Leveraging the capabilities of the Google Cloud Platform, CoLab eliminates the need for teams to wait on a dedicated database specialist. Experience the freedom to innovate without the constraints of traditional database management.
+  
+- Hastle Free Approvals:
   Seamlessly request manager approval on lab reports using CoLab Approver™ email notifications.
   
 - Syncing Without Sinking:
