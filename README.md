@@ -1,9 +1,9 @@
 # Hi, Welcome To CoLab  🤙
 
 ## We Are A Data Parsing and Aggregation Platform:
-- Import and export data without barriers:
-  All read and writes operate on a spreadsheet you control using the Google Sheets API
-  
+- Get Started Immediately:
+Achieve seamless data import and export with no constraints. Experience the flexibility of conducting all read and write operations on a spreadsheet under your control, utilizing the Google Sheets API.
+
 - No More Waiting For The Database Guy:
   Database Management Systems offer significant benefits for technical experts, yet they can inadvertently impede team efficiency by creating barriers to accessing the data layer. At CoLab, we believe in a solution designed for teams seeking rapid iteration. We serve as the seamless link between robust software and tangible data. Leveraging the capabilities of the Google Cloud Platform, CoLab eliminates the need for teams to wait on a dedicated database specialist. Experience the freedom to innovate without the constraints of traditional database management.
   
