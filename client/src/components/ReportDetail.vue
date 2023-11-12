@@ -57,12 +57,38 @@
         </v-btn>
       </template>
     </DetailFrame>
-    <div style="padding: 15px">
+    <div
+      v-if="!loadingDataSets"
+      style="padding: 15px"
+    >
       <div v-for="(mappedData, index) in mappedDataSets" :key="index">
         <div style="overflow: auto;">
           <ChartRender :chartData="mappedData" />
         </div>
       </div>
+    </div>
+    <div
+      v-else
+      style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding-top: 50px;"
+    >
+      <!-- <img src="../assets/GraphLoading.gif" > -->
+      <v-progress-circular
+        indeterminate
+        color="blue-darken-2"
+        size="72"
+        width="7"
+      ></v-progress-circular>
+    </div>
+    <div
+      v-if="dataSets.length === 0"
+      style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;"
+    >
+      <h1>
+        {{ report.name }} Doesn't Contain Any Data Sets
+      </h1>
+      <p>
+        Add Data Sets <a href="https://docs.google.com/spreadsheets/d/1pj3yveeKzqVRaIfLOyYB-t9ntEgkCFikkKE3Iu1NvA0/edit#gid=0">Here</a>
+      </p>
     </div>
   </div>
 </template>
@@ -75,6 +101,8 @@ import DetailFrame from './DetailFrame.vue'
 import ChartRender from './ChartRender.vue'
 import { computed, onMounted, ref } from 'vue'
 import axios from 'axios'
+
+const loadingDataSets = ref(true)
 
 function requestHeaders() {
   return {
@@ -114,10 +142,11 @@ const mappedDataSets = ref([])
 
 onMounted(async () => {
   await getDataSets();
+  loadingDataSets.value = false
 })
 
 const getDataSets = async () => {
-  for (const range of dataSets.value) {
+  for await (const range of dataSets.value) {
     const { data } = await (await axios.get(`/api/range/${range}`, requestHeaders()));
     const rowLength = data.map((d: any) => d.length)
     const maxLength = Math.max(...rowLength)

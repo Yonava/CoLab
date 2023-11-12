@@ -10,7 +10,7 @@
       style="display: flex; flex-direction: row; align-items: center; gap: 10px; background-color: #1b269e; position: sticky; top: 0; z-index: 1000; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
     >
       <h1 style="font-size: 2.7em">
-        CoLab
+        {{ filteredReports.length }} Reports
       </h1>
       <v-spacer></v-spacer>
       <v-btn icon>

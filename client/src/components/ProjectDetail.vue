@@ -18,11 +18,17 @@
           ID {{ user.id.slice(0, 8) }}
         </div>
       </div>
+
       <img
         :src="user.picture"
         style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid white;"
       />
     </div>
+
+    <img
+        src="../assets/Colab.svg"
+        style="position: absolute; width: 500px; height: 70vh; bottom: 2%; right: -2%;"
+      >
 
 
     <div v-if="selectedReport">
