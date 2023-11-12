@@ -17,6 +17,10 @@
         }"
       >
 
+        <v-icon size="md">
+          mdi-file-document-outline
+        </v-icon>
+
         {{ report.name || '(No Title Listed)' }}
 
         <v-tooltip

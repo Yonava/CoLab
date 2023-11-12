@@ -6,10 +6,13 @@
     style="position: relative;"
   >    <!-- top area -->
     <div
-      class="px-5 py-2"
-      style="display: flex; flex-direction: row; align-items: center; gap: 10px; background: rgb(31, 76, 126);  position: sticky; top: 0; z-index: 1000; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
+      class="pa-2"
+      style="display: flex; flex-direction: row; align-items: center; gap: 10px;  position: sticky; top: 0; z-index: 1000; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
     >
-      <h1 style="font-size: 2.2em;">
+      <h1
+        style="font-size: 2.2em; background: rgb(0, 0, 0, 0.2)"
+        class="px-5 rounded-xl"
+      >
         {{ filteredReports.length }} Reports
       </h1>
       <v-spacer></v-spacer>
@@ -74,7 +77,7 @@
         >
           <ListItem :report="report" />
         </div>
-        <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.3);"></div>
+        <div style="width: 100%; height: 1px; background: rgba(90, 90, 90, 0.3);"></div>
       </div>
     </div>
     </div>

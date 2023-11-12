@@ -29,6 +29,11 @@
             prop="date"
             icon="calendar-month"
             label="Date"
+            :button="{
+              condition: !report.date,
+              newPropValue: () => new Date().toISOString().slice(0, 10),
+              text: 'Today',
+            }"
           />
 
           <DetailInput
@@ -36,6 +41,11 @@
             prop="status"
             icon="check-circle"
             label="Status"
+            :button="{
+              condition: report.status === 'Pending Approval',
+              newPropValue: () => 'Complete',
+              text: 'Approve Report',
+            }"
           />
 
         </InputCoupler>
