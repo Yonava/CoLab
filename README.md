@@ -12,4 +12,4 @@
   CoLab rides the wave of real-time collaboration using Socket.io. Edit with your team without worrying about sinking ships or sinking deadlines, completing your titanic missions without Titanic results.
   
 - Power in Number:
-  Our dataset parsing and graphing technology can take a spreadsheet and turn it into beautiful visualizations because we know that great results are built on a foundation of great data.
+  As engineers, we know great results are built on a foundation of great data. Our dataset parsing and graphing technology can take a spreadsheet and turn it into beautiful visualizations without wasting time formatting.
