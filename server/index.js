@@ -1,4 +1,4 @@
-const express = require("express")
+const express = require("express");
 const cors = require("cors");
 const app = express();
 const http = require('http')
@@ -24,7 +24,8 @@ const GoogleSheet = require("./GoogleSheet.js");
 
 const scope = [
   'https://www.googleapis.com/auth/userinfo.profile',
-  'https://www.googleapis.com/auth/spreadsheets'
+  'https://www.googleapis.com/auth/spreadsheets',
+  'https://www.googleapis.com/auth/gmail.send'
 ]
 
 const errors = {
@@ -102,7 +103,6 @@ app.get('/api/auth/url', (req, res) => {
 });
 
 app.get('/api/auth/:authCode', async (req, res) => {
-  console.log('hitting auth route')
   const { authCode } = req.params;
   try {
     const auth = new OAuth2(
@@ -111,6 +111,7 @@ app.get('/api/auth/:authCode', async (req, res) => {
       redirectUri
     );
     const { tokens } = await auth.getToken(authCode);
+    console.log(tokens)
     const { access_token: accessToken } = tokens;
     const profile = await getGoogleProfileData(accessToken);
 
@@ -285,7 +286,7 @@ app.put("/api/batch", async (req, res) => {
 });
 
 
-app.post('/api/send-mail', async (req, res) => {
+app.post('/api/send-email', async (req, res) => {
 
   const credentials = {
     clientId: process.env.GOOGLE_OAUTH_CLIENT_ID,
@@ -317,22 +318,21 @@ app.post('/api/send-mail', async (req, res) => {
     return;
   }
 
-  const user = 'info@aimasterclass.com'
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       type: 'OAuth2',
-      user,
       clientId: credentials.clientId,
       clientSecret: credentials.clientSecret,
-      refreshToken: credentials.refreshToken,
-      accessToken,
+      refreshToken: '1//05priatPVFpeeCgYIARAAGAUSNwF-L9IrT0O4WSBeX4yy-v-PtvACgsGST990rptZih2k2V1UKuywjdEDXRErG9F0ZK-U7RDQGT8',
+      user: 'colabofficial0@gmail.com',
+      pass: 'C01aBOfficial$$$'
     },
   });
 
   const mailOptions = {
-    from: `AI Masterclass <${user}>`,
+    from: 'colabofficial0@gmail.com',
     to,
     subject,
     html,
@@ -349,8 +349,11 @@ app.post('/api/send-mail', async (req, res) => {
     return;
   }
 
+  console.log('sending email')
+
   transporter.sendMail(mailOptions, (err, data) => {
     if (err) {
+      console.log('bad', err)
       res.json({
         message: 'error',
         err,
@@ -358,12 +361,12 @@ app.post('/api/send-mail', async (req, res) => {
       return
     } else {
       console.log('Email sent!');
+      res.json({
+        message: 'success',
+      })
     }
   });
 
-  res.json({
-    message: 'success',
-  })
 });
 
 if (process.env.NODE_ENV === 'production') {

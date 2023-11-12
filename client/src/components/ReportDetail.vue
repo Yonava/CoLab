@@ -33,6 +33,21 @@
         </InputCoupler>
 
       </template>
+      <template #buttons>
+        <v-btn
+          @click="sendEmail"
+          size="large"
+          color="green"
+        >
+          <v-icon
+            class="mr-4"
+            size="x-large"
+          >
+            mdi-email
+          </v-icon>
+          email my boss
+        </v-btn>
+      </template>
     </DetailFrame>
     <div style="height: 700px; overflow: auto; padding: 15px">
       <div v-for="(mappedData, index) in mappedDataSets" :key="index">
@@ -64,6 +79,18 @@ function requestHeaders() {
 const props = defineProps<{
   item: any
 }>()
+
+const sendEmail = async () => {
+  await axios.post(`/api/send-email`, {
+    to: 'thomas@eykamp.com',
+    subject: 'Bitch Better Have My Graphs',
+    html: `
+      <h1>
+        Give me my fucking data
+      </h1>
+    `
+  })
+}
 
 const report = computed(() => props.item)
 const dataSets = computed(() => {
