@@ -254,7 +254,8 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
           datasets: [{
             label: 'Series',
             data: [],
-            backgroundColor: generateRandomGreenShade()
+            backgroundColor: generateRandomGreenShade(),
+            radius: 5
           }],
         },
       };
