@@ -25,7 +25,7 @@
     </div>
 
 
-    <div v-if="selectedReport" style="overflow: auto;">
+    <div v-if="selectedReport">
       <ReportDetail
         :item="selectedReport"
         :key="selectedReport.sysId"
@@ -34,7 +34,7 @@
     <div
       v-else
       class="justify-center d-flex"
-      style="width: 100%; height: 100%;"
+      style="width: 100vh; height: 100vh;"
     >
       <v-icon style="font-size: 35vw; opacity: 0.1;">
         mdi-file-document-outline
