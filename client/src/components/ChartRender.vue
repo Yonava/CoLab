@@ -231,7 +231,7 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
         data: {
           labels: matrix[0],
           datasets: [{
-            label: undefined,
+            label: 'Series',
             data: matrix[1],
             backgroundColor: [],
             borderColor: [],
@@ -243,7 +243,7 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
 
       for (let i = 0; i < matrix[1].length; i++) {
         tempChart.data.datasets[0].backgroundColor.push(generateRandomGreenShade())
-        tempChart.data.datasets[0].borderColor.push(generateRandomGreenShade())
+        tempChart.data.datasets[0].borderColor.push('rgb(255, 255, 255)')
       } break
     case 'scatter':
       tempChart = {
@@ -342,6 +342,7 @@ const inferChartType = (data: any): string[] => {
 
 const cleanedData = trimEmptyStrings(interpolateMissingValues(cleanAndConvert(props.chartData)))
 const chartTypes = inferChartType(cleanedData)
+console.log(chartTypes)
 
 setTimeout(() => {
   // delay loading
