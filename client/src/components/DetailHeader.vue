@@ -2,7 +2,6 @@
   <div>
     <div class="d-flex flex-row align-center">
       <SyncStatus />
-      {{ item.row }}
     </div>
     <div
       class="d-flex flex-row align-center"

@@ -76,7 +76,14 @@ export const useState = defineStore('state', {
       } catch (error) {
         console.log(error)
         window.location.replace(`/auth`)
+        return
       }
+
+      if (!this.user) {
+        const { data } = await axios.get("/api/user", requestHeaders());
+        this.user = data
+      }
+      console.log(this.user)
     },
     addReportCache(report: any) {
       this.reports.unshift(report)
