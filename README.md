@@ -18,6 +18,8 @@
 
 ## We Are A Data Parsing and Aggregation Platform:
 
+Our HackUMass project is dedicated to revolutionizing the workflow associated with lab reports in the environmental and chemical engineering sector. We aim to enhance efficiency by introducing innovative methods for iterating, expediting, and streamlining the approval process. Through cutting-edge technological solutions, our project seeks to optimize the entire lifecycle of lab reports, ensuring a seamless and accelerated experience for professionals in the environmental and chemical engineering domains.
+
 ### Get Started Immediately:
 Achieve seamless data import and export with no constraints. Experience the flexibility of conducting all read and write operations on a spreadsheet under your control, utilizing the Google Sheets API.
 
