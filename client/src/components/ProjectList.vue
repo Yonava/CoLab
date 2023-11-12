@@ -1,8 +1,13 @@
 <template>
-  <div style="height: 100vh; position: relative;">
+  <div
+    style="position: relative; background:#1b269e ;"
+  >
     <!-- top area -->
     <div
-      style="padding: 15px; display: flex; flex-direction: row; align-items: center; gap: 10px;"
+      color="blue-darken-2"
+      elevation="10"
+      class="px-5 py-2"
+      style="display: flex; flex-direction: row; align-items: center; gap: 10px; background-color: #1b269e; position: sticky; top: 0; z-index: 1000; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
     >
       <h1 style="font-size: 2.7em">
         CoLab
@@ -15,12 +20,13 @@
         icon
         @click="search = !search"
       >
-        <v-icon>mdi-magnify</v-icon>
+        <v-icon v-if="!search">mdi-magnify</v-icon>
+        <v-icon v-if="search">mdi-close</v-icon>
       </v-btn>
 
       <v-sheet
         v-if="search"
-        style="position: absolute; top: 90px; right: 10px; z-index: 1000; padding: 15px; border-radius: 10px;"
+        style="position: absolute; top: 85px; right: 10px; z-index: 1000; padding: 15px; border-radius: 10px;"
         elevation="18"
       >
         <h1 class="mb-2">
@@ -43,17 +49,16 @@
     </div>
 
     <!-- list box -->
-    <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%">
     <div
       v-if="filteredReports.length !== 0"
-      style="width: 95%; height: 90vh; background-color: rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: auto"
+      style="background-color: rgba(255, 255, 255, 0.1); overflow: auto; width: 100%"
     >
       <!-- item box -->
       <div
         v-for="report in filteredReports"
         :key="report.name"
-        style="display: flex; flex-direction: column; align-items: center;"
-
+        style="display: flex; flex-direction: column; align-items: center; width: 100%"
       >
         <div
           @click="selectedReport = report"
@@ -65,7 +70,7 @@
         >
           <ListItem :report="report" />
         </div>
-        <div style="width: 95%; height: 1px; background: rgba(255,255,255,0.3);"></div>
+        <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.3);"></div>
       </div>
     </div>
     </div>

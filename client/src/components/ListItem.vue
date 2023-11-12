@@ -3,12 +3,11 @@
     <div
       :style="{
         fontWeight: 900,
-        fontSize: '2em',
+        fontSize: '1.45em',
         lineHeight: 1,
         display: 'flex',
         flexDirection: 'row',
       }"
-      class="truncate"
     >
 
       <!-- primary title -->
@@ -54,7 +53,10 @@
 
     </div>
 
-    <div style="display: flex; flex-direction: row; padding-top: 20px;">
+    <div style="display: flex; flex-direction: row; padding-top: 20px; align-items: center; gap: 4px">
+      <v-icon>
+        mdi-account
+      </v-icon>
       <span style="font-size: 1.25em">
         {{ report.client }}
       </span>

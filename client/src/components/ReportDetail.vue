@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow: auto">
     <DetailFrame :item="report">
       <template #main>
 
@@ -57,7 +57,7 @@
         </v-btn>
       </template>
     </DetailFrame>
-    <div style="height: 700px; overflow: auto; padding: 15px">
+    <div style="padding: 15px">
       <div v-for="(mappedData, index) in mappedDataSets" :key="index">
         <div style="overflow: auto;">
           <ChartRender :chartData="mappedData" />
