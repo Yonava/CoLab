@@ -41,8 +41,9 @@
       </v-sheet>
 
       <v-btn icon
-        @click="addReport()"
+        @click="makeNewReport"
         color="green"
+        :loading="loadingNewItem"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -89,9 +90,16 @@ import { storeToRefs } from 'pinia'
 import ListItem from '../components/ListItem.vue'
 
 const search = ref(false)
+const loadingNewItem = ref(false)
 
 const { reports, selectedReport, filter, filteredReports } = storeToRefs(useState())
 const { addReport } = useState()
+
+const makeNewReport = async () => {
+  loadingNewItem.value = true
+  await addReport()
+  loadingNewItem.value = false
+}
 </script>
 
 <style scoped>

@@ -13,6 +13,7 @@ type Report = {
   desc: string
   dataSets: string
   sysId: number
+  managerEmail: string
   row: any
 }
 
@@ -45,11 +46,13 @@ export const useState = defineStore('state', {
       const sysId = Math.floor(Math.random() * 100000)
 
       const report: Report = {
-        name: `New Report`,
-        client: `Client ${sysId}`,
-        date: '2021-09-01',
-        status: 'In Progress',
-        desc: 'Lorem ipsum dolor sit amet, consectetur',
+        name: '',
+        client: ``,
+        date: '',
+        status: '',
+        desc: '',
+        dataSets: '',
+        managerEmail: '',
         row: null,
         sysId,
       }

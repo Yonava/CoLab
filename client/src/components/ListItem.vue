@@ -17,7 +17,7 @@
         }"
       >
 
-        {{ report.name }}
+        {{ report.name || '(No Title Listed)' }}
 
         <v-tooltip
           :disabled="smAndDown || !report.name"
@@ -39,7 +39,7 @@
         }"
       >
 
-        {{ report.date }}
+        {{ report.date || '(No Date Listed)' }}
 
         <v-tooltip
           :disabled="smAndDown || !report.date"
@@ -62,7 +62,7 @@
           mdi-account
         </v-icon>
         <span style="font-size: 1.25em; margin: 0px">
-          {{ report.client }}
+          {{ report.client || '(No Client Listed)' }}
         </span>
       </div>
       <v-spacer></v-spacer>
@@ -73,7 +73,7 @@
         class="px-2 rounded-lg"
       >
         <span style="font-size: 1.25em">
-          {{ report.status }}
+          {{ report.status || '(No Status Listed)' }}
         </span>
         <v-icon>
           mdi-{{ statusIcon }}
