@@ -51,7 +51,7 @@
 
       </template>
       <template #buttons>
-        <v-btn @click="sendEmail" size="large" color="green" type="submit">
+        <v-btn v-if="report.status !== 'Complete'" @click="sendEmail" size="large" color="green" type="submit">
           <v-icon class="mr-4" size="x-large">
             mdi-email
           </v-icon>
@@ -154,7 +154,8 @@ const sendEmail = async () => {
       formElement,
       'V-BWoXu67Cs6ht84n'
     )
-    console.log('success')
+    console.log('successfully sent email')
+    report.value.status = 'Pending Approval'
 
 
   } catch (error) {
