@@ -1,15 +1,15 @@
 <template>
+  <div>
+    <div style="width: 100%; height: 100vh; position: absolute; top: 0; left: 0; background-color: rgba(0, 0, 0, 0.1); pointer-events: none;"></div>
+
   <div
-    style="position: relative; background:#1b269e ;"
-  >
-    <!-- top area -->
+    style="position: relative;"
+  >    <!-- top area -->
     <div
-      color="blue-darken-2"
-      elevation="10"
       class="px-5 py-2"
-      style="display: flex; flex-direction: row; align-items: center; gap: 10px; background-color: #1b269e; position: sticky; top: 0; z-index: 1000; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
+      style="display: flex; flex-direction: row; align-items: center; gap: 10px; background: rgb(31, 76, 126);  position: sticky; top: 0; z-index: 1000; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
     >
-      <h1 style="font-size: 2.7em">
+      <h1 style="font-size: 2.2em;">
         {{ filteredReports.length }} Reports
       </h1>
       <v-spacer></v-spacer>
@@ -42,9 +42,12 @@
 
       <v-btn icon
         @click="addReport()"
+        color="green"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
+
+
 
     </div>
 
@@ -75,6 +78,7 @@
     </div>
     </div>
 
+  </div>
   </div>
 </template>
 

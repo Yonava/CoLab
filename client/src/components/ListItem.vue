@@ -3,7 +3,7 @@
     <div
       :style="{
         fontWeight: 900,
-        fontSize: '1.45em',
+        fontSize: '1.6em',
         lineHeight: 1,
         display: 'flex',
         flexDirection: 'row',
@@ -54,22 +54,38 @@
     </div>
 
     <div style="display: flex; flex-direction: row; padding-top: 20px; align-items: center; gap: 4px">
-      <v-icon>
-        mdi-account
-      </v-icon>
-      <span style="font-size: 1.25em">
-        {{ report.client }}
-      </span>
+      <div
+        style="display: flex; flex-direction: row; align-items: center; gap: 4px; background: rgba(255, 255,255, 0.2)"
+        class="px-2 rounded-lg"
+      >
+        <v-icon>
+          mdi-account
+        </v-icon>
+        <span style="font-size: 1.25em; margin: 0px">
+          {{ report.client }}
+        </span>
+      </div>
       <v-spacer></v-spacer>
-      <span style="font-size: 1.25em">
-        {{ report.status }}
-      </span>
+      <v-sheet
+        v-if="report.status"
+        style="display: flex; flex-direction: row; align-items: center; gap: 4px;"
+        :color="statusColor"
+        class="px-2 rounded-lg"
+      >
+        <span style="font-size: 1.25em">
+          {{ report.status }}
+        </span>
+        <v-icon>
+          mdi-{{ statusIcon }}
+        </v-icon>
+      </v-sheet>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useDisplay } from 'vuetify'
+import { computed } from 'vue'
 
 const { smAndDown } = useDisplay()
 
@@ -82,6 +98,27 @@ const props = defineProps<{
     desc: string
   }
 }>()
+
+const statusColor = computed(() => {
+  if (props.report.status === 'Complete') {
+    return 'green'
+  } else if (props.report.status === 'Pending Approval') {
+    return 'orange-darken-3'
+  } else {
+    return 'red'
+  }
+})
+
+const statusIcon = computed(() => {
+  if (props.report.status === 'Complete') {
+    return 'check-circle'
+  } else if (props.report.status === 'Pending Approval') {
+    return 'clock'
+  } else {
+    return 'alert-circle'
+  }
+})
+
 </script>
 
 

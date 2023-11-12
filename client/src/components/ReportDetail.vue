@@ -5,7 +5,7 @@
 
         <DetailHeader
           :item="report"
-          placeholder="Course Code"
+          placeholder="Report Name"
         ></DetailHeader>
 
         <DetailInput
@@ -58,7 +58,7 @@
       </template>
     </DetailFrame>
     <div
-      v-if="!loadingDataSets"
+      v-if="mappedDataSets.length > 0 && dataSets.length !== 0"
       style="padding: 15px"
     >
       <div v-for="(mappedData, index) in mappedDataSets" :key="index">
@@ -68,7 +68,7 @@
       </div>
     </div>
     <div
-      v-else
+      v-else-if="mappedDataSets.length === 0 && dataSets.length !== 0"
       style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding-top: 50px;"
     >
       <!-- <img src="../assets/GraphLoading.gif" > -->
@@ -80,7 +80,7 @@
       ></v-progress-circular>
     </div>
     <div
-      v-if="dataSets.length === 0"
+      v-else
       style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;"
     >
       <h1>
@@ -101,8 +101,6 @@ import DetailFrame from './DetailFrame.vue'
 import ChartRender from './ChartRender.vue'
 import { computed, onMounted, ref } from 'vue'
 import axios from 'axios'
-
-const loadingDataSets = ref(true)
 
 function requestHeaders() {
   return {
@@ -142,7 +140,6 @@ const mappedDataSets = ref([])
 
 onMounted(async () => {
   await getDataSets();
-  loadingDataSets.value = false
 })
 
 const getDataSets = async () => {
