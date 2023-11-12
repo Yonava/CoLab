@@ -55,7 +55,7 @@
           <v-icon class="mr-4" size="x-large">
             mdi-email
           </v-icon>
-          email my boss
+          Request Approval
         </v-btn>
       </template>
     </DetailFrame>
