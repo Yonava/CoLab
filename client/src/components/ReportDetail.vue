@@ -2,10 +2,18 @@
   <div>
     <DetailFrame :item="report">
       <template #main>
+
         <DetailHeader
           :item="report"
           placeholder="Course Code"
         ></DetailHeader>
+
+        <DetailInput
+          :item="report"
+          prop="managerEmail"
+          label="Manager Email"
+          icon="email"
+        />
 
         <DetailInput
           :item="report"
