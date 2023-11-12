@@ -1,10 +1,16 @@
 <template>
-  <ReportDetail
-    v-if="selectedReport"
-    :item="selectedReport"
-    :key="selectedReport.sysId"
-  />
-   <div
+  <div style="overflow: auto">
+    <img
+      src="../assets/vector.svg"
+      style="position: absolute; top: 10; right: -4%; width: 500px; height: 250px;"
+    />
+    <div v-if="selectedReport" style="overflow: auto;">
+      <ReportDetail
+        :item="selectedReport"
+        :key="selectedReport.sysId"
+      />
+    </div>
+    <div
       v-else
       class="justify-center d-flex"
       style="width: 100%; height: 100%;"
@@ -13,6 +19,7 @@
         mdi-file-document-outline
       </v-icon>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
