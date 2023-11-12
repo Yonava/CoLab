@@ -16,32 +16,51 @@
         {{ filteredReports.length }} Reports
       </h1>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-sort</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click="search = !search"
+      <v-menu :offset="[10, 30]">
+        <template v-slot:activator="{ props }">
+          <v-btn
+            icon
+            v-bind="props"
+          >
+            <v-icon>mdi-sort</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(prop, name) in sortProps"
+            :key="name"
+            @click="sortProp = prop"
+          >
+            <v-list-item-title>
+              <v-icon v-if="sortProp === prop">mdi-check</v-icon>
+              {{ name }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+      <v-menu
+        :offset="[10, 30]"
+        :close-on-content-click="false"
       >
-        <v-icon v-if="!search">mdi-magnify</v-icon>
-        <v-icon v-if="search">mdi-close</v-icon>
-      </v-btn>
+        <template v-slot:activator="{ props }">
+          <v-btn
+            icon
+            v-bind="props"
+          >
+            <v-icon>mdi-magnify</v-icon>
+          </v-btn>
+          </template>
 
-      <v-sheet
-        v-if="search"
-        style="position: absolute; top: 85px; right: 10px; z-index: 1000; padding: 15px; border-radius: 10px;"
-        elevation="18"
-      >
-        <h1 class="mb-2">
-          Find Report
-        </h1>
-        <v-text-field
-          v-model="filter"
-          variant="outlined"
-          placeholder="Search"
-          style="width: 200px;"
-        ></v-text-field>
-      </v-sheet>
+          <v-sheet class="pt-4 px-4">
+            <v-text-field
+              v-model="filter"
+              variant="outlined"
+              placeholder="Search"
+              style="width: 200px;"
+            ></v-text-field>
+          </v-sheet>
+
+      </v-menu>
 
       <v-btn icon
         @click="makeNewReport"
@@ -50,9 +69,6 @@
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
-
-
-
     </div>
 
     <!-- list box -->
@@ -92,10 +108,17 @@ import { useState } from '../stores/state'
 import { storeToRefs } from 'pinia'
 import ListItem from '../components/ListItem.vue'
 
-const search = ref(false)
 const loadingNewItem = ref(false)
 
-const { reports, selectedReport, filter, filteredReports } = storeToRefs(useState())
+const sortProps = {
+  'Name': 'name',
+  'Client': 'client',
+  'Manager Email': 'managerEmail',
+  'Status': 'status',
+  'Start Date': 'date',
+}
+
+const { reports, selectedReport, filter, filteredReports, sortProp } = storeToRefs(useState())
 const { addReport } = useState()
 
 const makeNewReport = async () => {

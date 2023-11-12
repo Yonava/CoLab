@@ -34,10 +34,23 @@ export const useState = defineStore('state', {
 
     syncStatus: true,
 
+    sortProp: null,
+
     user: null
   }),
   getters: {
     filteredReports(): any {
+      if (this.sortProp) {
+        return this.reports.filter((report) => report.name.toLowerCase().includes(this.filter.toLowerCase())).sort((a, b) => {
+          if (a[this.sortProp] < b[this.sortProp]) {
+            return -1
+          }
+          if (a[this.sortProp] > b[this.sortProp]) {
+            return 1
+          }
+          return 0
+        }) || []
+      }
       return this.reports.filter((report) => report.name.toLowerCase().includes(this.filter.toLowerCase())) || []
     }
   },
