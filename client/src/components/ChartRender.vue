@@ -3,13 +3,20 @@
     <h1>
       {{ title }}
     </h1>
+    <b>
+      <p style="transform: rotate(-90deg) translate(-250px, 5px); width: 10px;">{{ yAxis }}</p>
+    </b>
     <vue3-chart-js
+      class="ml-3"
       ref="chartRef"
       :type="chart.type"
       :id="chart.id"
       :data="chart.data"
       :key="renderKey"
     ></vue3-chart-js>
+    <b>
+      <p class="text-center">{{ xAxis }}</p>
+    </b>
   </div>
 </template>
 
@@ -27,6 +34,8 @@ const chartRef = ref<HTMLElement>()
 const renderKey = ref(0)
 
 const title = ref('')
+const xAxis = ref('')
+const yAxis = ref('')
 
 const chart = {
   id: 'chart',
@@ -41,6 +50,22 @@ const chart = {
       tension: 0.1
     }]
   },
+  options: {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'dsadsa'
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: yAxis.value
+        }
+      }
+    },
+  }
 }
 
 const updateChart = (newChart: object) => {
@@ -55,23 +80,46 @@ const updateChart = (newChart: object) => {
 
 const trimEmptyStrings = (matrix: (number | string | undefined)[][]): (number | string | undefined)[][] => {
   let numCols = matrix[0].length
+  let numRows = matrix.length;
 
-  for (let i = 0; i < matrix.length; i++) {
-    const row = matrix[i];
-    const nonEmptyCellIndex = row.findIndex(cell => cell !== '');
 
-    if (nonEmptyCellIndex !== -1 && row.every((cell, index) => index === nonEmptyCellIndex || cell === '')) {
-      // Found a row with only one non-empty cell
+  for (let c = 0; c < 2; c++) {
+    for (let i = 0; i < matrix.length; i++) {
+      const row = matrix[i];
+      const nonEmptyCellIndex = row.findIndex(cell => cell !== '');
+  
+      if (nonEmptyCellIndex !== -1 && row.every((cell, index) => index === nonEmptyCellIndex || cell === '')) {
+        // Found a row with only one non-empty cell
+  
+        // Remove the row
+        matrix.splice(i, 1);
+        numRows--
+        // first or second iteration?
+        if (c === 0) title.value = String(row[nonEmptyCellIndex])
+        else xAxis.value = String(row[nonEmptyCellIndex])
+        break
+      }
+    }
+  }
+  
+  // find Y axis
+  for (let col = 0; col < numCols; col++) {
+    let nonEmptyCount = 0;
+    let nonEmptyRow = -1;
 
-      // Remove the row
-      matrix.splice(i, 1);
-
-      // Return the value
-      title.value = String(row[nonEmptyCellIndex])
+    for (let row = 0; row < numRows; row++) {
+      if (matrix[row][col] !== '') {
+        nonEmptyCount++;
+        nonEmptyRow = row;
+      }
+    }
+    if (nonEmptyCount === 1) {
+      yAxis.value = String(matrix[nonEmptyRow][col])
+      matrix[nonEmptyRow][col] = ''
     }
   }
 
-  // remove empty rows
+   // remove empty rows
   matrix = matrix.filter(row => row.some(cell => cell !== ''))
 
   // remove trailing empty strings
@@ -217,6 +265,22 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
           labels: removeLeadingEmptyStrings(matrix[0]),
           datasets: [],
         },
+        options: {
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: xAxis.value
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: yAxis.value
+              }
+            }
+          },
+        }
       };
 
     for (let i = 1; i < matrix.length; i++) {
@@ -242,7 +306,22 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
             borderWidth: 1
           }],
         },
-
+        options: {
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: xAxis.value
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: yAxis.value
+              }
+            }
+          },
+        }
       };
 
       for (let i = 0; i < matrix[1].length; i++) {
@@ -261,6 +340,22 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
             radius: 5
           }],
         },
+        options: {
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: xAxis.value
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: yAxis.value
+              }
+            }
+          },
+        }
       };
       console.log('data')
 
