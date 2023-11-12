@@ -7,6 +7,7 @@ const REPORTS = [
   'date',
   'status',
   'desc',
+  'managerEmail',
   'dataSets'
 ] as const;
 
