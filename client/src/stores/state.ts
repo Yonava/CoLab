@@ -49,7 +49,7 @@ export const useState = defineStore('state', {
         name: '',
         client: ``,
         date: '',
-        status: '',
+        status: 'In Progress',
         desc: '',
         dataSets: '',
         managerEmail: '',

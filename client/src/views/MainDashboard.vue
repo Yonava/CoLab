@@ -52,10 +52,22 @@ import {
   ref,
   computed
 } from 'vue'
+import { useState } from '../stores/state'
+import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
 import { useDisplay } from 'vuetify'
-
 import ProjectList from '../components/ProjectList.vue'
 import ProjectDetail from '../components/ProjectDetail.vue'
+
+const route = useRoute()
+const { reports, selectedReport } = storeToRefs(useState())
+
+if (route.query.report) {
+  const report = reports.value.find((report) => report.sysId === route.query.report)
+  if (report) selectedReport.value = report
+}
+
+
 
 const { mdAndUp } = useDisplay()
 
