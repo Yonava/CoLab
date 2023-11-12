@@ -2,18 +2,50 @@
   <div>
     <DetailFrame :item="report">
       <template #main>
+        <DetailHeader
+          :item="report"
+          placeholder="Report Name"
+        ></DetailHeader>
 
-        <DetailHeader :item="report" placeholder="Course Code"></DetailHeader>
+        <DetailInput
+          :item="report"
+          prop="managerEmail"
+          label="Manager Email"
+          icon="email"
+        />
 
-        <DetailInput @submit.prevent="sendEmail" :item="report" prop="managerEmail" label="Manager Email" icon="email" />
-
-        <DetailInput :item="report" prop="client" label="Client" icon="account" />
+        <DetailInput
+          :item="report"
+          prop="client"
+          label="Client"
+          icon="account"
+        />
 
         <InputCoupler>
 
-          <DetailInput :item="report" prop="date" icon="calendar-month" label="Date" />
+          <DetailInput
+            :item="report"
+            prop="date"
+            icon="calendar-month"
+            label="Date"
+            :button="{
+              condition: !report.date,
+              newPropValue: () => new Date().toISOString().slice(0, 10),
+              text: 'Today',
+            }"
+          />
 
-          <DetailInput :item="report" prop="status" icon="check-circle" label="Status" />
+          <DetailInput
+            :item="report"
+            prop="status"
+            icon="check-circle"
+            label="Status"
+            :button="{
+              condition: report.status === 'Pending Approval',
+              newPropValue: () => 'Complete',
+              text: 'Approve Report',
+            }"
+          />
 
         </InputCoupler>
 
@@ -27,12 +59,38 @@
         </v-btn>
       </template>
     </DetailFrame>
-    <div style="height: 700px; overflow: auto; padding: 15px">
+    <div
+      v-if="mappedDataSets.length > 0 && dataSets.length !== 0"
+      style="padding: 15px"
+    >
       <div v-for="(mappedData, index) in mappedDataSets" :key="index">
         <div style="overflow: auto;">
           <ChartRender :chartData="mappedData" />
         </div>
       </div>
+    </div>
+    <div
+      v-else-if="mappedDataSets.length === 0 && dataSets.length !== 0"
+      style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding-top: 50px;"
+    >
+      <!-- <img src="../assets/GraphLoading.gif" > -->
+      <v-progress-circular
+        indeterminate
+        color="blue-darken-2"
+        size="72"
+        width="7"
+      ></v-progress-circular>
+    </div>
+    <div
+      v-else
+      style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;"
+    >
+      <h1>
+        {{ report.name }} Doesn't Contain Any Data Sets
+      </h1>
+      <p>
+        Add Data Sets <a href="https://docs.google.com/spreadsheets/d/1pj3yveeKzqVRaIfLOyYB-t9ntEgkCFikkKE3Iu1NvA0/edit#gid=0">Here</a>
+      </p>
     </div>
   </div>
 </template>
@@ -120,7 +178,7 @@ onMounted(async () => {
 })
 
 const getDataSets = async () => {
-  for (const range of dataSets.value) {
+  for await (const range of dataSets.value) {
     const { data } = await (await axios.get(`/api/range/${range}`, requestHeaders()));
     const rowLength = data.map((d: any) => d.length)
     const maxLength = Math.max(...rowLength)

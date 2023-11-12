@@ -1,16 +1,19 @@
 <template>
+  <div>
+    <div style="width: 100%; height: 100vh; position: absolute; top: 0; left: 0; background-color: rgba(0, 0, 0, 0.1); pointer-events: none;"></div>
+
   <div
-    style="position: relative; background:#1b269e ;"
-  >
-    <!-- top area -->
+    style="position: relative;"
+  >    <!-- top area -->
     <div
-      color="blue-darken-2"
-      elevation="10"
-      class="px-5 py-2"
-      style="display: flex; flex-direction: row; align-items: center; gap: 10px; background-color: #1b269e; position: sticky; top: 0; z-index: 1000; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
+      class="pa-2"
+      style="display: flex; flex-direction: row; align-items: center; gap: 10px;  position: sticky; top: 0; z-index: 1000; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
     >
-      <h1 style="font-size: 2.7em">
-        CoLab
+      <h1
+        style="font-size: 2.2em; background: rgb(0, 0, 0, 0.2)"
+        class="px-5 rounded-xl"
+      >
+        {{ filteredReports.length }} Reports
       </h1>
       <v-spacer></v-spacer>
       <v-btn icon>
@@ -41,10 +44,14 @@
       </v-sheet>
 
       <v-btn icon
-        @click="addReport()"
+        @click="makeNewReport"
+        color="green"
+        :loading="loadingNewItem"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
+
+
 
     </div>
 
@@ -70,11 +77,12 @@
         >
           <ListItem :report="report" />
         </div>
-        <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.3);"></div>
+        <div style="width: 100%; height: 1px; background: rgba(90, 90, 90, 0.3);"></div>
       </div>
     </div>
     </div>
 
+  </div>
   </div>
 </template>
 
@@ -85,9 +93,16 @@ import { storeToRefs } from 'pinia'
 import ListItem from '../components/ListItem.vue'
 
 const search = ref(false)
+const loadingNewItem = ref(false)
 
 const { reports, selectedReport, filter, filteredReports } = storeToRefs(useState())
 const { addReport } = useState()
+
+const makeNewReport = async () => {
+  loadingNewItem.value = true
+  await addReport()
+  loadingNewItem.value = false
+}
 </script>
 
 <style scoped>
