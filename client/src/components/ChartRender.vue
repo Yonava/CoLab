@@ -145,12 +145,13 @@ const cleanAndConvert = (matrix: (number | string)[][]): (number | string)[][] =
   return matrix
 }
 
-// const trimmedMatrix = trimEmptyStrings(interpolateMissingValues(cleanAndConvert(originalMatrix)))
-// console.log(trimmedMatrix)
-
+const removeLeadingEmptyStrings = (arr: (string | number | undefined)[]): (string | number | undefined)[] => {
+  let i = 0
+  while (i < arr.length && arr[i] === '') i++
+  return arr.slice(i)
+}
 
 // test cases
-
 const generateRandomMatrix = (n: number, m: number): (number | string)[][] => {
   const matrix: (number | string)[][] = [];
 
@@ -210,7 +211,7 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
         id: 'chart',
         type: 'line',
         data: {
-          labels: matrix[0],
+          labels: removeLeadingEmptyStrings(matrix[0]),
           datasets: [],
         },
       };
@@ -231,7 +232,7 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
         data: {
           labels: matrix[0],
           datasets: [{
-            label: undefined,
+            label: 'Series',
             data: matrix[1],
             backgroundColor: [],
             borderColor: [],
@@ -243,7 +244,7 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
 
       for (let i = 0; i < matrix[1].length; i++) {
         tempChart.data.datasets[0].backgroundColor.push(generateRandomGreenShade())
-        tempChart.data.datasets[0].borderColor.push(generateRandomGreenShade())
+        tempChart.data.datasets[0].borderColor.push('rgb(255, 255, 255)')
       } break
     case 'scatter':
       tempChart = {
@@ -341,11 +342,11 @@ const inferChartType = (data: any): string[] => {
 }
 
 const cleanedData = trimEmptyStrings(interpolateMissingValues(cleanAndConvert(props.chartData)))
-console.log(cleanedData)
 const chartTypes = inferChartType(cleanedData)
 console.log(chartTypes)
 
 setTimeout(() => {
+  // delay loading
   updateChart(pushChart(cleanedData, chartTypes[0] ?? 'bar'))
 }, 200)
 
