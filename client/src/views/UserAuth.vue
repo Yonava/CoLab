@@ -39,8 +39,6 @@
           <v-icon size="80">mdi-linkedin</v-icon>
         </v-btn>
 
-
-
         <v-btn
           @click="authorize()"
           size="120"
@@ -56,7 +54,7 @@
 
 <script setup lang="ts">
 import { useState } from '../stores/state';
-import { onMounted, ref, Ref } from 'vue';
+import { onMounted, ref, type Ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
