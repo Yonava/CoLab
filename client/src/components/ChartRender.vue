@@ -191,15 +191,18 @@ for (let i = 0; i <= 5; i++) {
   // console.log(trimEmptyStrings(interpolateMissingValues(cleanAndConvert(testCase))));
 }
 
-const generateRandomGreenShade = (): string => {
-  const red = 0
-  const green = Math.floor(Math.random() * 256) + 50
-  const blue = Math.floor(Math.random() * 256) + 50
+function generateRandomGreenShade() {
+  const colors = [
+    'rgb(34, 87, 122)',
+    'rgb(56, 163, 165)',  
+    'rgb(87, 204, 153)',  
+    'rgb(128, 237, 153)',  
+    'rgb(199, 249, 204)',
+    // Add more colors as needed
+  ];
 
-  // Format the RGB values into a CSS color string
-  const color = `rgb(${red}, ${green}, ${blue})`
-
-  return color
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  return colors[randomIndex];
 }
 
 const pushChart = (matrix: (string | number | undefined)[][], chartType: string) => {
@@ -254,7 +257,8 @@ const pushChart = (matrix: (string | number | undefined)[][], chartType: string)
           datasets: [{
             label: 'Series',
             data: [],
-            backgroundColor: generateRandomGreenShade()
+            backgroundColor: generateRandomGreenShade(),
+            radius: 5
           }],
         },
       };
