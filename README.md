@@ -18,7 +18,7 @@
 
 ## We Are A Data Parsing and Aggregation Platform:
 
-We are dedicated to revolutionizing the workflow associated with lab reports in the environmental and chemical engineering sector. We aim to enhance efficiency by introducing innovative methods for iterating, expediting, and streamlining the approval process.
+We are dedicated to revolutionizing the workflow associated with lab reports in the environmental and chemical engineering sector. We aim to enhance efficiency by introducing innovative methods for iterating, expediting, and streamlining the approval process of lab reports.
 
 ### Get Started Immediately:
 Achieve seamless data import and export with no constraints. Experience the flexibility of conducting all read and write operations on a spreadsheet under your control, utilizing the Google Sheets API.
